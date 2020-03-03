@@ -1,0 +1,42 @@
+#include <Adafruit_NeoPixel.h>
+#define LED_PIN    6
+#define LED_COUNT 8
+int BUTTON = 5;
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(BUTTON,INPUT);
+  strip.begin();           // INITIALIZE NeoPixel strip object (REQUIRED)
+  strip.show();            // Turn OFF all pixels ASAP
+  strip.setBrightness(50); // Set BRIGHTNESS to about 1/5 (max = 255)
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+if(digitalRead(BUTTON) == HIGH)
+{digitalWrite(6, HIGH);
+
+strip.setPixelColor(0, strip.Color(10, 5, 200));
+strip.setPixelColor(1, strip.Color(30, 90, 100));
+strip.setPixelColor(2, strip.Color(60, 111, 7));
+strip.setPixelColor(3, strip.Color(50, 2, 90));
+strip.setPixelColor(4, strip.Color(40, 9, 10));
+strip.setPixelColor(5, strip.Color(88, 88, 88));
+strip.setPixelColor(6, strip.Color(200, 10, 60));
+strip.setPixelColor(7, strip.Color(100, 7, 100));
+strip.show();
+
+}
+else{
+ colorWipe(strip.Color(255, 0, 255), 50); // Pink
+ colorWipe(strip.Color(255, 247, 0), 50); // Yellow
+}
+}
+
+void colorWipe(uint32_t color, int wait) {
+  for(int i=0; i<strip.numPixels(); i++) { // For each pixel in strip...
+    strip.setPixelColor(i, color);         //  Set pixel's color (in RAM)
+    strip.show();                          //  Update strip to match
+    delay(wait);                           //  Pause for a moment
+  }
+}
